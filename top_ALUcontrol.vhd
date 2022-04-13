@@ -42,14 +42,14 @@ end top_ALUcontrol;
 
 architecture top_structure of top_ALUcontrol is
 
-COMPONENT ALUcontrol
+component ALUcontrol
     Port( 
           funct7 : in STD_LOGIC_VECTOR (0 to 6);           --funct7 of instruction (aka I[31-25])
           funct3 : in STD_LOGIC_VECTOR (0 to 2);           --funct3 of instruction (aka I[14-12])
           ALUop : in STD_LOGIC_VECTOR (0 to 1);            --ALUop from Main Control
           ALUoperation : out STD_LOGIC_VECTOR (0 to 3)     --ALUcontrol Output to ALU
          );   
-end COMPONENT;
+end component;
 
 begin
 u1 : ALUcontrol

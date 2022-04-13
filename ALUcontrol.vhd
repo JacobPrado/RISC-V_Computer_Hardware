@@ -35,10 +35,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity ALUcontrol is                                        --Start of Declaration
     Port ( 
-           funct7 : in STD_LOGIC_VECTOR (0 to 6);           --funct7 of instruction (aka I[31-25])
-           funct3 : in STD_LOGIC_VECTOR (0 to 2);           --funct3 of instruction (aka I[14-12])
-           ALUop : in STD_LOGIC_VECTOR (0 to 1);            --ALUop from Main Control
-           ALUoperation : out STD_LOGIC_VECTOR (0 to 3)
+           funct7 : in STD_LOGIC_VECTOR (6 downto 0);           --funct7 of instruction (aka I[31-25])
+           funct3 : in STD_LOGIC_VECTOR (2 downto 0);           --funct3 of instruction (aka I[14-12])
+           ALUop : in STD_LOGIC_VECTOR (1 downto 0);            --ALUop from Main Control
+           ALUoperation : out STD_LOGIC_VECTOR (3 downto 0)
           );   --ALUcontrol Output to ALU
 end ALUcontrol;                                             --End of Declaration
 
@@ -59,6 +59,8 @@ begin                                                       --Start of Architect
                     when "0100000" =>
                         if funct3 = "000" then              --Subtract (sub) instruction
                             ALUoperation <= "0110";         --SUB ALU operation
+                        else                                --Error case for unexpected inputs
+                            ALUoperation <= "1111";         --ALU non-operation
                         end if;                             --End funct3 if
                         
                     when "0000000" =>
@@ -71,12 +73,18 @@ begin                                                       --Start of Architect
                                 
                             when "111" =>                   --Logical AND (and) instruction
                                 ALUoperation <= "0000";     --AND ALU operation
+                                
+                            when others =>                  --Error case for unexpected inputs
+                                ALUoperation <= "1111";     --ALU non-operation
                         end case;                           --End funct3 cases
                         
+                    when others =>                          --Error case for unexpected inputs
+                        ALUoperation <= "1111";              --ALU non-operation
+
                 end case;                                   --End of funct7 cases 
             
-            when others =>                                  --Error case for non-expected inputs
-                ALUoperation <= "1111"                      --ALU non-operation
+            when others =>                                  --Error case for unexpected inputs
+                ALUoperation <= "1111";                     --ALU non-operation
                 
         end case;                                           --End of ALUop cases
     
