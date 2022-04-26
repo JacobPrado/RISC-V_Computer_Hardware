@@ -43,7 +43,7 @@ end MUX4to1;
 architecture Behavioral of MUX4to1 is
 
 begin
-    process (in0, in1, ctrl) is
+    process (in0, in1, in2, in3, ctrl) is
     begin
         case ctrl is
         when "00" =>
@@ -52,10 +52,9 @@ begin
             outChnl <= in1;
         when "10" =>
             outChnl <= in2;
-        when "11" =>
-                outChnl <= in3;
+        when others =>
+            outChnl <= in3;
         end case;
-
     end process;
 
 end Behavioral;
