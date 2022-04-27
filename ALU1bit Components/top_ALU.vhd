@@ -73,7 +73,7 @@ component ALU1bitOverflowDetect is
 end component;
 
 signal c0,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,c21,c22,c23,c24,c25,c26,c27,c28,c29,c30,c31 : std_logic;
-signal setsig : std_logic;
+signal setsig : std_logic; 
 signal Les : std_logic;
 
 begin
@@ -112,7 +112,7 @@ begin
     u29 : ALU1bit PORT MAP(Xinvert, Yinvert, c29, Op, x(29), y(29), Les, c29, z(29));
     u30 : ALU1bit PORT MAP(Xinvert, Yinvert, c30, Op, x(30), y(30), Les, c30, z(30));
     u31 : ALU1bitOverflowDetect PORT MAP(Xinvert, Yinvert, c31, Op, x(31), y(31), Les, z(31), setsig, over);
-    zero <= (((z(0) NOR z(1)) NOR (z(2) NOR z(3)) NOR ((z(4) NOR z(5)) NOR (z(6) NOR z(7))) NOR z(8) NOR z(9) NOR z(10) NOR z(11) NOR z(12) NOR z(13) NOR z(14) NOR z(15) NOR z(16) NOR z(17) NOR z(18) NOR z(19) NOR z(20) NOR z(21) NOR z(22) NOR z(23) NOR z(24) NOR z(25) NOR z(26) NOR z(27) NOR z(28) NOR z(29) NOR z(30) NOR z(31);
+    zero <= (((((((((((((((((((((((((((((((z(0) NOR z(1)) NOR z(2)) NOR z(3)) NOR z(4)) NOR z(5)) NOR z(6)) NOR z(7)) NOR z(8)) NOR z(9)) NOR z(10)) NOR z(11)) NOR z(12)) NOR z(13)) NOR z(14)) NOR z(15)) NOR z(16)) NOR z(17)) NOR z(18)) NOR z(19)) NOR z(20)) NOR z(21)) NOR z(22)) NOR z(23)) NOR z(24)) NOR z(25)) NOR z(26)) NOR z(27)) NOR z(28)) NOR z(29)) NOR z(30)) NOR z(31));
     
 
 end Behavioral;
