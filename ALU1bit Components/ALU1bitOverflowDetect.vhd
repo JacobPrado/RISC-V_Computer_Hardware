@@ -50,7 +50,7 @@ architecture Behavioral of ALU1bitOverflowDetect is
 
 component over_detect
     Port(
-         B_invert, Mux_A, Mux_B, Carry_Out, Add_Result : in std_logic;
+         Carry_In, Carry_Out : in std_logic;
          overflow : out std_logic
          );
 end component;
@@ -184,11 +184,8 @@ Port Map(
 
 od1 : over_detect
 Port Map(
-         B_invert => Binvert,
-         Mux_A => muxA,
-         Mux_b => muxB,
+         Carry_In => CarryIn,
          Carry_Out => carryOUT,
-         Add_Result => addRESULT,
          overflow => overflowDetect
          );
 

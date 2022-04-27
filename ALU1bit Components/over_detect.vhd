@@ -33,7 +33,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity over_detect is
   Port ( 
-        B_invert, Mux_A, Mux_B, Carry_Out, Add_Result : in std_logic;
+        Carry_In, Carry_Out : in std_logic;
         overflow : out std_logic
   );
 end over_detect;
@@ -43,20 +43,7 @@ begin
 process is
 
 begin
-if (B_invert = '0' and Mux_A = '0' and Mux_B = '0' and Add_Result = '1') then
-    overflow <= '1';
-elsif (B_invert = '0' and Mux_A = '1' and Mux_B = '1' and Add_Result = '0') then
-    overflow <= '1';
-elsif (B_invert = '1' and Mux_A = '1' and Mux_B = '0' and Add_Result = '1') then
-    overflow <= '1';
-elsif (B_invert = '1' and Mux_A = '0' and Mux_B = '1' and Add_Result = '0') then
-    overflow <= '1';
-else
-    overflow <= '0';
-end if;
-
--- account for the operation?
--- do we care about carryout/in?
+overflow <= Carry_In XOR Carry_Out;
 
 end process;
 end Behavioral;
