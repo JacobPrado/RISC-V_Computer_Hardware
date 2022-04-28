@@ -114,22 +114,21 @@ begin
     u30 : ALU1bit PORT MAP(Xinvert, Yinvert, c30, Op, x(30), y(30), Les, c31, sigZ(30));
     u31 : ALU1bitOverflowDetect PORT MAP(Xinvert, Yinvert, c31, Op, x(31), y(31), Les, sigZ(31), setSIG, over);
     z <= sigZ;
-    zero <= (((((((((((((((((((((((((((((((sigZ(0) NOR sigZ(1))
-                                           NOR sigZ(2)) NOR sigZ(3))
-                                           NOR sigZ(4)) NOR sigZ(5))
-                                           NOR sigZ(6)) NOR sigZ(7))
-                                           NOR sigZ(8)) NOR sigZ(9))
-                                           NOR sigZ(10)) NOR sigZ(11))
-                                           NOR sigZ(12)) NOR sigZ(13))
-                                           NOR sigZ(14)) NOR sigZ(15))
-                                           NOR sigZ(16)) NOR sigZ(17))
-                                           NOR sigZ(18)) NOR sigZ(19))
-                                           NOR sigZ(20)) NOR sigZ(21))
-                                           NOR sigZ(22)) NOR sigZ(23))
-                                           NOR sigZ(24)) NOR sigZ(25))
-                                           NOR sigZ(26)) NOR sigZ(27))
-                                           NOR sigZ(28)) NOR sigZ(29))
-                                           NOR sigZ(30)) NOR sigZ(31));
+    zero <= NOT(((((((((((((((((((((((((((((((sigZ(0) OR sigZ(1))
+                                           OR sigZ(2)) OR sigZ(3))
+                                           OR sigZ(4)) OR sigZ(5))
+                                           OR sigZ(6)) OR sigZ(7))
+                                           OR sigZ(8)) OR sigZ(9))
+                                           OR sigZ(10)) OR sigZ(11))
+                                           OR sigZ(12)) OR sigZ(13))
+                                           OR sigZ(14)) OR sigZ(15))
+                                           OR sigZ(16)) OR sigZ(17))
+                                           OR sigZ(18)) OR sigZ(19))
+                                           OR sigZ(20)) OR sigZ(21))
+                                           OR sigZ(22)) OR sigZ(23))
+                                           OR sigZ(24)) OR sigZ(25))
+                                           OR sigZ(26)) OR sigZ(27))
+                                           OR sigZ(28)) OR sigZ(29))
+                                           OR sigZ(30)) OR sigZ(31));
    
-
 end Behavioral;
