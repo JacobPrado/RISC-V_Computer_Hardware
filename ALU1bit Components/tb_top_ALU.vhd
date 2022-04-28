@@ -88,10 +88,11 @@ begin
     sigX <= "10100000000000000000000000000000";
     sigY <= "01100000000000000000000000000000";
     wait for 10 ns;
+    
 --TEST NOR
     sigXinv <= '1';     --Expected result:
     sigYinv <= '1';     --sigZ = 11011111111111111111111111111111
-    sigOP <= "01";
+    sigOP <= "00";
     sigX <= "00100000000000000000000000000000";
     sigY <= "01100000000000000000000000000000";
     wait for 10 ns;
@@ -117,6 +118,21 @@ begin
     sigX <= "00011000000000000000000000000000";
     sigY <= "01100000000000000000000000000000";
     wait for 10 ns;    
+
+--Test SLT
+    sigXinv <= '0';     --TEST OVERFLOW: X - Y gives set less than operation
+    sigYinv <= '1';     --Expected Result: sigZ = 1 since X < Y
+    sigOP <= "11";
+    sigX <= "00000000000000000000000000001000";
+    sigY <= "00000000000001000000000000000000";
+    wait for 10 ns;
+
+    sigXinv <= '0';     --TEST OVERFLOW: X - Y gives set less than operation
+    sigYinv <= '1';     --Expected Result: sigZ = 0 since X > Y
+    sigOP <= "11";
+    sigX <= "00000000000001000000000000000000";
+    sigY <= "00000000000000000000000000001000";
+    wait for 10 ns;
 
 --Test SUB
     sigXinv <= '0';     --TEST OVERFLOW: X - X gives zero
