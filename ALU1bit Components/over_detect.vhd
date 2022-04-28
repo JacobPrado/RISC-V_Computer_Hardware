@@ -40,10 +40,11 @@ end over_detect;
 
 architecture Behavioral of over_detect is
 begin
-process is
 
+process (Carry_In, Carry_Out) is
 begin
 overflow <= Carry_In XOR Carry_Out;
 
 end process;
+
 end Behavioral;

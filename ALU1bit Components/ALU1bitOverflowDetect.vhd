@@ -170,6 +170,7 @@ Port Map(
           sum => addResult,
           cout => carryOUT
          );
+Set <= addResult;               --Pass result from adder to Set output
 
 --Select Output user Operation signal
 m2 : MUX4to1
