@@ -88,7 +88,14 @@ begin
     sigX <= "10100000000000000000000000000000";
     sigY <= "01100000000000000000000000000000";
     wait for 10 ns;
-    
+--TEST NOR
+    sigXinv <= '1';     --Expected result:
+    sigYinv <= '1';     --sigZ = 11011111111111111111111111111111
+    sigOP <= "01";
+    sigX <= "00100000000000000000000000000000";
+    sigY <= "01100000000000000000000000000000";
+    wait for 10 ns;
+        
 --TEST ADD Operation
     sigXinv <= '0';     --TEST OVERFLOW: (Ve+) + (Ve+) gives negative
     sigYinv <= '0';     --Expected Result: sigOVER = 1
