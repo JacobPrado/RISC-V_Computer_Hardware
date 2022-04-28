@@ -109,7 +109,7 @@ Port Map ( sigIN => a,
 --Inverter for input b          
 ic2 : Inverter
 Port Map ( sigIN => b,
-           sigOUT => Bneg,
+           sigOUT => Bneg
           );
           
 --Input A MUX
