@@ -38,12 +38,12 @@ begin
 			var_data_mem(7)  := X"00000000";
 			var_data_mem(8)  := X"00000000";
 			var_data_mem(9)  := X"00000000";
-			var_data_mem(10) := X"00000000";
-			var_data_mem(11) := X"00000000";
-			var_data_mem(12) := X"00000000";
-			var_data_mem(13) := X"00000000";
-			var_data_mem(14) := X"00000000";
-			var_data_mem(15) := X"00000000";
+			var_data_mem(10) := X"00000001";
+            var_data_mem(11) := X"00000010";
+            var_data_mem(12) := X"00000000";
+            var_data_mem(13) := X"00000011";
+            var_data_mem(14) := X"00000000";
+            var_data_mem(15) := X"00000000";
 		elsif (rising_edge(clk) and MW = '1') then
 			-- synchronous write data in on rising edge of clock
 			var_data_mem(var_addr) := data_in;

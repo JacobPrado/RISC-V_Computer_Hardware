@@ -36,10 +36,11 @@ begin
 
 		var_addr := conv_integer(addr_in(3 downto 0));
 		case var_addr is
-			when 0  => instr_out <= "00000000000000000000000000000000"; -- replace with machine code of: LW   $4, $0
-			when 1  => instr_out <= "00000000000000000000000000000000"; -- replace with machine code of: ADDI $5, $4, 3
-			when 2  => instr_out <= "00000000000000000000000000000000"; -- replace with machine code of: ADD  $6, $5, $4 
-			when 3  => instr_out <= "00000000000000000000000000000000"; -- replace with machine code of: SW   $4, $6
+			when 0  => instr_out <= "00000000000000000010001000000011"; -- replace with machine code of: LW   $4, $0
+            when 1  => instr_out <= "00000000001100100000001010010011"; -- replace with machine code of: ADDI $5, $4, 3
+            when 2  => instr_out <= "00000000001100100000001000010011"; -- replace with machine code of: ADDI $4, $4, 3
+            --when 2  => instr_out <= "00000000010000101000001100110011"; -- replace with machine code of: ADD  $6, $5, $4
+            when 3  => instr_out <= "00000000010000110010000000100011"; -- replace with machine code of: SW   $4, $6
 			when 4  => instr_out <= X"00000000";
 			when 5  => instr_out <= X"00000000";
 			when 6  => instr_out <= X"00000000";
@@ -53,7 +54,7 @@ begin
 			when 14 => instr_out <= X"00000000";
 			when 15 => instr_out <= X"00000000";
 			when others =>  
-				instr_out <= X"0000";
+				instr_out <= X"00000000";
 		end case;
 	end process;
   

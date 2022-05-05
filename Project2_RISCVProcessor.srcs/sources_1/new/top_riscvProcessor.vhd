@@ -32,7 +32,16 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity top_riscvProcessor is
---  Port ( );
+  Port (
+         pcClk : in STD_LOGIC;
+         pcReset : in STD_LOGIC;
+         pcSet : in STD_LOGIC;
+         resultMUX : out STD_LOGIC_VECTOR (31 downto 0);
+         debugOUT1 : out STD_LOGIC_VECTOR (31 downto 0);
+         debugOUT2 : out STD_LOGIC_VECTOR (31 downto 0);
+         debugOUT3 : out STD_LOGIC_VECTOR (31 downto 0);
+         debugOUT4 : out STD_LOGIC_VECTOR (31 downto 0)
+        );
 end top_riscvProcessor;
 
 architecture Behavioral of top_riscvProcessor is
@@ -147,6 +156,14 @@ component register32bit IS
   );
 END component;
 
+-- Immediate Generator Component
+component immGenerator is
+    Port ( 
+           instrIN : in STD_LOGIC_VECTOR (31 downto 0);
+           immOUT : out STD_LOGIC_VECTOR (31 downto 0)
+          );
+end component;
+
 --PC signal lines
 signal PCtoAdd : std_logic_vector (31 downto 0);
 signal MUXintoPC : std_logic_vector (31 downto 0);
@@ -156,7 +173,7 @@ signal reset : std_logic;
 signal set : std_logic;
 
 -- Instruction Memory signal lines
-signal PCintoIM : std_logic_vector (31 downto 0);
+--signal PCintoIM : std_logic_vector (31 downto 0);
 signal outputIM : std_logic_vector (31 downto 0);
 
 -- Main Control signal lines
@@ -206,18 +223,23 @@ signal ANDResult : std_logic;
 -- Begin of process
 begin
 
+--Map input signals
+clk <= pcClk;
+reset <= pcReset;
+set <= pcSet;
+
 -- PC component declaration
 pc : register32bit PORT MAP(MUXintoPC, clk, reset, set, PCtoAdd);
 
 -- Instruction memory declaration
-im : instruction_memory PORT MAP(PCintoIM, outputIM);
+im : instruction_memory PORT MAP(PCtoAdd, outputIM);
 
 -- Main Control declaration
 mn : mn_ctrl PORT MAP(outputIM(6 downto 0), branchCtrl, memReadCtrl, mem2RegCtrl, aluOpCtrl, 
                       memWriteCtrl, aluSrcCtrl, regWriteCtrl);
                       
 -- Registers File declaration
-rf : registers_file PORT MAP(clk, reset, regwriteCtrl, writeDataIn, outputIM(11 downto 7),
+rf : registers_file PORT MAP(clk, reset, regWriteCtrl, writeDataIn, outputIM(11 downto 7),
                              outputIM(19 downto 15), outputIM(24 downto 20), regDataOutA, regDataOutB);
 
 -- ALU Control declaration
@@ -237,16 +259,26 @@ dm : data_memory PORT MAP(reset, clk, memWriteCtrl, aluResult, regDataOutB, data
 mx2 : mux2to1_32bit PORT MAP(aluResult, dataMemRead, mem2RegCtrl, writeDataIn);
 
 -- Adder for PC current + 4
-constant4 <= "00000000000000000000000000000100"
+constant4 <= "00000000000000000000000000000001";
 add1 : top_adder_32bit PORT MAP(PCtoAdd, constant4, add4Out, cout1);
 
 -- Adder for PC current + Immediate
 add2 : top_adder_32bit PORT MAP(PCtoAdd, immGenOut, addImmOut, cout2);
 
 -- AND gate declaration for control to select Adder result to PC
-gate : ANDgate PORT MAP ( branchCtrl, aluZero, ANDresult);
+gate : ANDgate PORT MAP (branchCtrl, aluZero, ANDresult);
 
 -- MUX declaration (MUX for connection between next Adder Results and PC)
 mx3 : mux2to1_32bit PORT MAP(add4Out, addImmOut, ANDresult, MUXintoPC);
+
+-- Immediate Value Generator (Sign extender for Imm fields)
+imgen : immGenerator PORT MAP(outputIM, immGenOut);
+
+--Map port outputs
+resultMUX <= writeDataIN;
+debugOUT1 <= dataMemRead;
+debugOUT2 <= aluResult;
+debugOUT3 <= outputIM;
+debugOUT4 <= regDataOutA;
 
 end Behavioral;

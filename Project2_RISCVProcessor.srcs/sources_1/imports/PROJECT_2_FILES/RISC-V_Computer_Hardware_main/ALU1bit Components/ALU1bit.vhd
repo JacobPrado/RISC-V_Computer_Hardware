@@ -52,11 +52,11 @@ component adder_32bit
          );   
 end component;
 
-component MUX2to1
+component mux2to1
     Port ( in0 : in STD_LOGIC;
        in1 : in STD_LOGIC;
-       ctrl : in STD_LOGIC;
-       outChnl : out STD_LOGIC
+       sel : in STD_LOGIC;
+       mux_out : out STD_LOGIC
        );
 end component;
 
@@ -113,18 +113,18 @@ Port Map ( sigIN => b,
           );
           
 --Input A MUX
-m0 : MUX2to1
+m0 : mux2to1
 Port Map( in0 => a,
           in1 => Aneg,
-          ctrl => Ainvert,
-          outChnl => muxA );
+          sel => Ainvert,
+          mux_out => muxA );
 
 --Input B MUX
-m1 : MUX2to1
+m1 : mux2to1
 Port Map( in0 => b,
           in1 => Bneg,
-          ctrl => Binvert,
-          outChnl => muxB );
+          sel => Binvert,
+          mux_out => muxB );
           
 g0 : ANDgate
 Port Map ( in0 => muxA,

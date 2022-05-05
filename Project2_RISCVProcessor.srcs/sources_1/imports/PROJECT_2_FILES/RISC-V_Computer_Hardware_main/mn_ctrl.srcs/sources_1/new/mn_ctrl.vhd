@@ -48,6 +48,7 @@ end mn_ctrl;
 architecture CTRL_ARCH of mn_ctrl is
 --Create constants for easy readability for the case statement
 CONSTANT RTYPE  :   std_logic_vector(6 downto 0) := "0110011";
+CONSTANT ADDI   :   std_logic_vector(6 downto 0) := "0010011";
 CONSTANT LOAD   :   std_logic_vector(6 downto 0) := "0000011";
 CONSTANT STORE  :   std_logic_vector(6 downto 0) := "0100011";
 CONSTANT BEQ    :   std_logic_vector(6 downto 0) := "1100011";
@@ -60,6 +61,8 @@ begin
         case opcode is
         when RTYPE =>
             ctrl_sig := "00100010";
+        when ADDI =>
+            ctrl_sig := "10100010";
         when LOAD =>
             ctrl_sig := "11110000";
         when STORE =>
