@@ -1,10 +1,10 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: Ababei Hardware Inc.
+-- Engineer: Simon,Andrew;Prado,Jacob;Celano,Caleb
 -- 
--- Create Date: 05/02/2022 02:59:48 PM
--- Design Name: 
--- Module Name: top_riscvProcessor - Behavioral
+-- Create Date: 05/04/2022 08:30:29 PM
+-- Design Name: RISC-V reduced instructions processor
+-- Module Name: tb_riscvProcessor - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -36,11 +36,8 @@ entity top_riscvProcessor is
          pcClk : in STD_LOGIC;
          pcReset : in STD_LOGIC;
          pcSet : in STD_LOGIC;
-         resultMUX : out STD_LOGIC_VECTOR (31 downto 0);
-         debugOUT1 : out STD_LOGIC_VECTOR (31 downto 0);
-         debugOUT2 : out STD_LOGIC_VECTOR (31 downto 0);
-         debugOUT3 : out STD_LOGIC_VECTOR (31 downto 0);
-         debugOUT4 : out STD_LOGIC_VECTOR (31 downto 0)
+         MuxDM : out STD_LOGIC_VECTOR (31 downto 0);
+         instruc   : out STD_LOGIC_VECTOR (31 downto 0)
         );
 end top_riscvProcessor;
 
@@ -275,10 +272,7 @@ mx3 : mux2to1_32bit PORT MAP(add4Out, addImmOut, ANDresult, MUXintoPC);
 imgen : immGenerator PORT MAP(outputIM, immGenOut);
 
 --Map port outputs
-resultMUX <= writeDataIN;
-debugOUT1 <= dataMemRead;
-debugOUT2 <= aluResult;
-debugOUT3 <= outputIM;
-debugOUT4 <= regDataOutA;
+MuxDM <= writeDataIN;
+instruc   <= outputIM;
 
 end Behavioral;

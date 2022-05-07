@@ -1,9 +1,9 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: Ababei Hardware Inc.
+-- Engineer: Simon,Andrew;Prado,Jacob;Celano,Caleb
 -- 
 -- Create Date: 05/04/2022 08:30:29 PM
--- Design Name: 
+-- Design Name: RISC-V reduced instructions processor
 -- Module Name: tb_riscvProcessor - Behavioral
 -- Project Name: 
 -- Target Devices: 
@@ -43,11 +43,8 @@ component top_riscvProcessor is
          pcClk : in STD_LOGIC;
          pcReset : in STD_LOGIC;
          pcSet : in STD_LOGIC;
-         resultMUX : out STD_LOGIC_VECTOR (31 downto 0);
-         debugOUT1 : out STD_LOGIC_VECTOR (31 downto 0);
-         debugOUT2 : out STD_LOGIC_VECTOR (31 downto 0);
-         debugOUT3 : out STD_LOGIC_VECTOR (31 downto 0);
-         debugOUT4 : out STD_LOGIC_VECTOR (31 downto 0)
+         MuxDM : out STD_LOGIC_VECTOR (31 downto 0);
+         instruc   : out STD_LOGIC_VECTOR (31 downto 0)
         );
 end component;
 
@@ -55,25 +52,15 @@ end component;
 signal clock : STD_LOGIC;
 signal reset : STD_LOGIC;
 signal set : STD_LOGIC;
-signal result : STD_LOGIC_VECTOR (31 downto 0);
 
+signal MuxDM : STD_LOGIC_VECTOR (31 downto 0);
+signal instruc : STD_LOGIC_VECTOR (31 downto 0);
 
-signal debug1 : STD_LOGIC_VECTOR (31 downto 0);
-signal debug2 : STD_LOGIC_VECTOR (31 downto 0);
-signal debug3 : STD_LOGIC_VECTOR (31 downto 0);
-signal debug4 : STD_LOGIC_VECTOR (31 downto 0);
-
---resultMUX <= writeDataIN;
---debugOUT1 <= dataMemRead;
---debugOUT2 <= aluResult;
---debugOUT3 <= outputIM;
---debugOUT4 <= regDataOutA;
-
-constant tpw_clk : time := 30ns;
+constant tpw_clk : time := 35ns;
 
 begin
 
-u1 : top_riscvProcessor Port Map (clock, reset, set, result, debug1, debug2, debug3, debug4);
+u1 : top_riscvProcessor Port Map (clock, reset, set, MuxDM, instruc);
 
 	--Clock generation process
     clock1_gen:
@@ -89,10 +76,10 @@ process
 begin
     set <= '0';
     reset <= '1';
-    wait for 120 ns;
+    wait for tpw_clk*4;
     
     reset <= '0';
-    wait for 1000 ns;
+    wait for tpw_clk*20;
 end process;
 
 end Behavioral;
